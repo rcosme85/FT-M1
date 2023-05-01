@@ -10,9 +10,75 @@ Implementar la clase LinkedList, definiendo los siguientes métodos:
   search(isEven), donde isEven es una función que retorna true cuando recibe por parámetro un número par, busca un nodo cuyo valor sea un número par.
   En caso de que la búsqueda no arroje resultados, search debe retornar null.
 */
-function LinkedList() {}
+function LinkedList() {
+  this.head = null
+  this.size = 0
+}
+function Node(value) {
+  this.value = value;
+  this.next = null;
+}
+LinkedList.prototype.add = function (dato) {
+  let nuevoNodo = new Node(dato);
+  let current = this.head;
+  if (!current) {
+    this.head = nuevoNodo;
+    this.size++;
+    //  console.log(nuevoNodo)
+    return nuevoNodo;
+  }
+  while (current.next !== null) {
+    current = current.next;
+  }
+  current.next = nuevoNodo;
+  this.size++;
+  //console.log(nuevoNodo)
+  return nuevoNodo;
+}
+LinkedList.prototype.remove = function () { 
+    if (this.head === null) {
+      //  console.log(null)
+      return null;
+    }
+    let current = this.head;
 
-function Node(value) {}
+    if (current.next === null) {
+      let nodoPrimero = this.head.value;
+      this.head = null;
+      //console.log(nodoPrimero)
+      this.size--;
+      return nodoPrimero;
+    }
+    while (current.next.next !== null) {
+      current = current.next;
+    }
+    let nodoRemovido = current.next.value;
+    current.next = null;
+    // console.log(nodoRemovido)
+    this.size--;
+    return nodoRemovido;
+};
+LinkedList.prototype.search = function (valor) {
+    let current = this.head;
+    while (current) {
+      if (typeof valor !== "function") {
+        if (current.value === valor) {
+          return current.value;
+        }
+      } else {
+        // si es una función
+        //console.log(valor(current.value));
+        if (valor(current.value)) {
+          //console.log(current.value)
+          return current.value;
+        }
+      }
+      current = current.next;
+    }
+    return null;
+};
+
+
 
 /* EJERCICIO 2
 Implementar la clase HashTable.
